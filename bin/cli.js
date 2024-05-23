@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 'use strict';
 
-const parseArgs = require('minimist');
-const camelize = require('camelize');
-const { Errawr } = require('errawr');
+import parseArgs from 'minimist';
+import camelize from 'camelize';
+import { Errawr } from 'errawr';
 
-const { Macrome } = require('../lib/macrome');
-const { logger: baseLogger } = require('../lib/utils/logger');
+import { Macrome } from '../lib/macrome.js';
+import { logger as baseLogger } from '../lib/utils/logger.js';
 
 const logger = baseLogger.get('macrome');
 
