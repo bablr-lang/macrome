@@ -1,12 +1,13 @@
-# Macromé
+# @bablr/macrome
 
-Macrome (pronounced mac-row-may) is the in-tree build system. It is most closely related to `make`, and its principal innovation is its ability to manage generated scripts intermixed with source (human-written) scripts without ever losing track of which are which. It provides you the power of scripting against the filesystem while helping you avoid pitfalls like lost (overwritten) work or difficult to clean up messes. Generated 1000 files by accident? `macrome clean`!
+Macromé (pronounced mac-row-may) is the in-tree build system. It is most closely related to `make`, and its principal innovation is its ability to manage generated scripts intermixed with source (human-written) scripts without ever losing track of which are which. It provides you the power of scripting against the filesystem while helping you avoid pitfalls like lost (overwritten) work or difficult to clean up messes. Generated 1000 files by accident? `macrome clean`!
 
 Here is what it looks like when macrome is used to generate transpiled scripts inside the [@iter-tools/regex](https://github.com/iter-tools/regex) package:
 
 <img width="534" alt="Screen Shot 2022-03-12 at 5 43 43 PM" src="https://user-images.githubusercontent.com/540777/158040005-c5fb349e-4f38-4465-9997-2c5453cc186f.png">
 
 Note that [the file in the screenshot](https://github.com/iter-tools/regex/blob/v0.1.4/lib/internal/engine.js) was checked into git after being generated, which enables the github repository itself to function as a node package! Such a package can be trivially forked, and any user's fork can be used like so:
+
 ```jsonc
 // package.json
 {

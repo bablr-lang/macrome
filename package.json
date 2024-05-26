@@ -38,9 +38,6 @@
     "generator",
     "babel"
   ],
-  "repository": "git@github.com:conartist6/macrome.git",
-  "author": "Conrad Buck <conartist6@gmail.com>",
-  "license": "MIT",
   "dependencies": {
     "@conartist6/rd-parse": "4.0.0-rc.0",
     "@iter-tools/queue": "^1.5.1",
@@ -93,5 +90,9 @@
     "jest-snapshot": "^27.4.6",
     "lint-staged": "^11.0.0",
     "npm-run-all": "^4.1.5"
-  }
+  },
+  "repository": "git@github.com:bablr-lang/macrome.git",
+  "homepage": "https://github.com/bablr-lang/macrome",
+  "author": "Conrad Buck <conartist6@gmail.com>",
+  "license": "MIT"
 }
