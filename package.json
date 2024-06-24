@@ -17,7 +17,6 @@
     "bin/**"
   ],
   "scripts": {
-    "prepare": "husky install",
     "lint": "eslint .",
     "format": "prettier --write '**/*.{js,json,md}'",
     "test": "jest",
