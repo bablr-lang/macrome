@@ -1,14 +1,21 @@
 #!/usr/bin/env node
 'use strict';
 
+import { dirname } from 'node:path';
 import parseArgs from 'minimist';
 import camelize from 'camelize';
 import { Errawr } from 'errawr';
+import requireFresh from 'import-fresh';
+import findUp from 'find-up';
+import { standaloneQuery } from '../lib/watchman.js';
 
 import { Macrome } from '../lib/macrome.js';
 import { logger as baseLogger } from '../lib/utils/logger.js';
 
 const logger = baseLogger.get('macrome');
+const { isArray } = Array;
+
+const ensureArray = (value) => (isArray(value) ? value : [value]);
 
 const argv = camelize(
   parseArgs(process.argv.slice(2), {
@@ -54,10 +61,28 @@ function runCommand(macrome, command, argv) {
 }
 
 if (!argv.help) {
-  const macrome = new Macrome({ ...argv });
-  const command = argv[''][0] || 'build';
+  const projectConfigPath = findUp.sync([
+    'macrome.project-config.cjs',
+    'macrome.project-config.js',
+  ]);
 
-  runCommand(macrome, command, argv);
+  if (projectConfigPath) {
+    const projectConfig = requireFresh(projectConfigPath);
+    const command = argv[''][0] || 'build';
+
+    const projects = await standaloneQuery(dirname(projectConfigPath), {
+      include: ensureArray(projectConfig.projects).map((project) => `${project}/macrome.config.*`),
+      suffixes: ['cjs', 'js'],
+    });
+
+    for (const { path } of projects) {
+      const root = `${dirname(projectConfigPath)}/${dirname(path)}`;
+
+      runCommand(new Macrome({ ...argv, root }), command, argv);
+    }
+  } else {
+    runCommand(new Macrome({ ...argv }), command, argv);
+  }
 } else {
   const usage = `Generates in-tree files tagged with @macrome.
 Usage: npx macrome [command] [options]
