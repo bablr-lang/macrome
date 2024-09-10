@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
-import { dirname } from 'node:path';
+import { dirname, parse } from 'node:path';
 import parseArgs from 'minimist';
 import camelize from 'camelize';
 import { Errawr } from 'errawr';
@@ -62,13 +62,16 @@ function runCommand(macrome, command, argv) {
 
 if (!argv.help) {
   const projectConfigPath = findUp.sync([
+    'macrome.config.cjs',
+    'macrome.config.js',
     'macrome.project-config.cjs',
     'macrome.project-config.js',
   ]);
 
-  if (projectConfigPath) {
+  const command = argv[''][0] || 'build';
+
+  if (projectConfigPath && parse(projectConfigPath).name.startsWith('macrome.project-config')) {
     const projectConfig = requireFresh(projectConfigPath);
-    const command = argv[''][0] || 'build';
 
     const projects = await standaloneQuery(dirname(projectConfigPath), {
       include: ensureArray(projectConfig.projects).map((project) => `${project}/macrome.config.*`),
