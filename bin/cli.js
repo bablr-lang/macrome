@@ -79,9 +79,10 @@ if (!argv.help) {
     });
 
     for (const { path } of projects) {
-      const root = `${dirname(projectConfigPath)}/${dirname(path)}`;
+      const prefix = dirname(path);
+      const root = `${dirname(projectConfigPath)}/${prefix}`;
 
-      runCommand(new Macrome({ ...argv, root }), command, argv);
+      runCommand(new Macrome({ ...argv, root, prefix }), command, argv);
     }
   } else {
     runCommand(new Macrome({ ...argv }), command, argv);
